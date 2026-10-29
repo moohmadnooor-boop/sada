@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'نورة الشهري', 'email' => 'noura@sada.test', 'bio' => 'كل اقتباس رسالة لم تُرسل.'],
             ['name' => 'فيصل الحربي', 'email' => 'faisal@sada.test', 'bio' => 'أبحث عن الحكمة في التفاصيل الصغيرة.'],
             ['name' => 'ريم الزهراني', 'email' => 'reem@sada.test', 'bio' => null],
-        ])->map(fn (array $data) => User::factory()->create($data + ['password' => 'password123']));
+        ])->map(fn (array $data) => User::create($data + ['password' => 'password123']));
 
         $quotes = [
             ['على قدر أهل العزم تأتي العزائم، وتأتي على قدر الكرام المكارم', 'المتنبي', 'poetry', 'diwan-al-mutanabbi'],

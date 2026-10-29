@@ -2,11 +2,12 @@
 # Container entrypoint for Render: prepare config, migrate, seed once, then serve.
 set -e
 
-# Render's generated secret is 32 random bytes in base64; Laravel expects the "base64:" prefix.
+# Laravel needs a 32-byte key with a "base64:" prefix. Render generates a random secret of its own
+# format, so derive a valid key from it (SHA-256 always gives exactly 32 bytes).
 case "$APP_KEY" in
     base64:*) ;;
     "") echo "APP_KEY is not set" >&2; exit 1 ;;
-    *) export APP_KEY="base64:$APP_KEY" ;;
+    *) APP_KEY=$(php -r 'echo "base64:".base64_encode(hash("sha256", getenv("APP_KEY"), true));'); export APP_KEY ;;
 esac
 
 export APP_URL="${APP_URL:-$RENDER_EXTERNAL_URL}"
