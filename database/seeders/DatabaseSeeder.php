@@ -8,6 +8,7 @@ use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,8 +16,14 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database with demo users, categories and classic Arabic quotes.
+     * Runs in one transaction so a failure never leaves half-seeded tables behind.
      */
     public function run(): void
+    {
+        DB::transaction(fn () => $this->seedDemoData());
+    }
+
+    private function seedDemoData(): void
     {
         $categories = collect([
             ['name' => 'حكمة', 'slug' => 'wisdom', 'icon' => '🦉', 'color' => '#4FD1C5'],
