@@ -3,6 +3,8 @@
 **كلمات يبقى صداها** — منصة عربية لمشاركة الاقتباسات، مبنية بـ Laravel و Blade.
 An Arabic quotes platform built with Laravel 13, Blade, Tailwind CSS 4 and SQLite.
 
+**Live:** https://sada-rlwo.onrender.com (free Render instance — the first visit after a quiet period takes about a minute to wake up).
+
 ## Features
 
 | Core (from the SRS) | New features |
