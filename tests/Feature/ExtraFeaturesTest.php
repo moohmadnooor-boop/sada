@@ -46,9 +46,10 @@ test('a user cannot follow themselves', function () {
 });
 
 test('quotes can be searched by text, author or sharer', function () {
-    Quote::factory()->create(['content' => 'الوقت كالسيف', 'author' => null]);
-    Quote::factory()->create(['content' => 'نص آخر', 'author' => 'المتنبي']);
-    Quote::factory()->create(['content' => 'لا علاقة له']);
+    $sharer = User::factory()->create(['name' => 'Test Sharer']);
+    Quote::factory()->for($sharer)->create(['content' => 'الوقت كالسيف', 'author' => null]);
+    Quote::factory()->for($sharer)->create(['content' => 'نص آخر', 'author' => 'المتنبي']);
+    Quote::factory()->for($sharer)->create(['content' => 'لا علاقة له', 'author' => null]);
 
     $this->get(route('quotes.index', ['q' => 'السيف']))->assertSee('الوقت كالسيف')->assertDontSee('لا علاقة له');
     $this->get(route('quotes.index', ['q' => 'المتنبي']))->assertSee('نص آخر')->assertDontSee('لا علاقة له');
